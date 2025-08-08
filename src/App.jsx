@@ -8,7 +8,7 @@ const PASSWORD = "weareshield";
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [password, setPassword] = useState("");
-  const [activeTab, setActiveTab] = useState("feeds");
+  const [activeTab, setActiveTab] = useState(""); // No tab selected by default
 
   useEffect(() => {
     if (localStorage.getItem("loggedIn") === "true") {
@@ -73,6 +73,7 @@ export default function App() {
       </nav>
       <button onClick={handleLogout}>Logout</button>
 
+      {/* Only show tab content if a tab is selected */}
       {activeTab === "feeds" && <FeedsTab />}
       {activeTab === "wanteds" && <WantedsTab />}
       {activeTab === "employees" && <EmployeesTab />}
