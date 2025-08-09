@@ -32,7 +32,7 @@ A React + Firebase Firestore admin dashboard for managing Feeds, Wanteds, and Em
 
 ## Login
 
-- **Default password:** `weareshield`
+- **Default password:** is in 
 
 ## Tech Stack
 

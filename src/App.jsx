@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import FeedsTab from "./FeedsTab.jsx";
 import EmployeesTab from "./EmployeesTab.jsx";
-import WantedsTab from "./WantedTab.jsx";  // <-- Import the real WantedTab component
+import WantedsTab from "./WantedTab.jsx"; 
 
-const PASSWORD = "weareshield";
+const PASSWORD = import.meta.env.VITE_PASSWORD;
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [password, setPassword] = useState("");
-  const [activeTab, setActiveTab] = useState(""); // No tab selected by default
+  const [activeTab, setActiveTab] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("loggedIn") === "true") {
@@ -21,7 +21,6 @@ export default function App() {
       localStorage.setItem("loggedIn", "true");
       setLoggedIn(true);
     } else {
-  // TODO: Handle incorrect password (removed alert)
     }
   }
 
@@ -72,8 +71,6 @@ export default function App() {
         </button>
       </nav>
       <button onClick={handleLogout}>Logout</button>
-
-      {/* Only show tab content if a tab is selected */}
       {activeTab === "feeds" && <FeedsTab />}
       {activeTab === "wanteds" && <WantedsTab />}
       {activeTab === "employees" && <EmployeesTab />}
