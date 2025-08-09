@@ -3,7 +3,7 @@ import FeedsTab from "./FeedsTab.jsx";
 import EmployeesTab from "./EmployeesTab.jsx";
 import WantedsTab from "./WantedTab.jsx"; 
 
-const PASSWORD = import.meta.env.VITE_PASSWORD;
+const PASSWORD = import.meta.env.PASSWORD;
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
