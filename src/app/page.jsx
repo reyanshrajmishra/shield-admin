@@ -6,7 +6,7 @@ import EmployeesTab from "../EmployeesTab.jsx";
 import WantedsTab from "../WantedTab.jsx";
 import "./global.css";
 
-const PASSWORD = process.env.PASSWORD;
+const PASSWORD = process.env.NEXT_PUBLIC_PASSWORD;
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
