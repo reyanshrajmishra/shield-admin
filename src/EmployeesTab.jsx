@@ -1,3 +1,5 @@
+"use client"; // Mark as client component for Next.js 13+ App Router
+
 import React, { useState, useEffect } from "react";
 import { employeesCollection } from "./firebase.js";
 
@@ -18,9 +20,9 @@ export default function EmployeesTab() {
   const [newDob, setNewDob] = useState("");
   const [newRole, setNewRole] = useState("");
   const [newDetails, setNewDetails] = useState("");
-  const [editingId, setEditingId] = useState(null); // This will hold Firestore docId
+  const [editingId, setEditingId] = useState(null);
   const [editName, setEditName] = useState("");
-  const [editId, setEditId] = useState(""); // Employee custom ID (field)
+  const [editId, setEditId] = useState("");
   const [editDob, setEditDob] = useState("");
   const [editRole, setEditRole] = useState("");
   const [editDetails, setEditDetails] = useState("");
@@ -31,38 +33,44 @@ export default function EmployeesTab() {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const list = [];
       snapshot.forEach((doc) => {
-        list.push({ docId: doc.id, ...doc.data() }); // Store Firestore docId separately
+        list.push({ docId: doc.id, ...doc.data() });
       });
       setEmployees(list);
       setLoading(false);
     });
+
     return () => unsubscribe();
   }, []);
 
   async function addEmployee() {
     if (!newName.trim() || !newRole.trim() || !newDetails.trim()) {
-      // Validation - can expand as needed
+      alert("Please fill in the required fields.");
       return;
     }
-    await addDoc(employeesCollection, {
-      name: newName.trim(),
-      id: newId.trim(),
-      dob: newDob.trim(),
-      role: newRole.trim(),
-      details: newDetails.trim(),
-      createdAt: new Date(),
-    });
-    setNewName("");
-    setNewId("");
-    setNewDob("");
-    setNewRole("");
-    setNewDetails("");
+    try {
+      await addDoc(employeesCollection, {
+        name: newName.trim(),
+        id: newId.trim(),
+        dob: newDob.trim(),
+        role: newRole.trim(),
+        details: newDetails.trim(),
+        createdAt: new Date(),
+      });
+      setNewName("");
+      setNewId("");
+      setNewDob("");
+      setNewRole("");
+      setNewDetails("");
+    } catch (error) {
+      console.error("Error adding employee:", error);
+      alert("Failed to add employee. Try again.");
+    }
   }
 
   function startEditing(emp) {
-    setEditingId(emp.docId); // Use Firestore docId here
+    setEditingId(emp.docId);
     setEditName(emp.name || "");
-    setEditId(emp.id || ""); // This is employee custom ID, editable separately
+    setEditId(emp.id || "");
     setEditDob(emp.dob || "");
     setEditRole(emp.role || "");
     setEditDetails(emp.details || "");
@@ -70,27 +78,31 @@ export default function EmployeesTab() {
 
   async function saveEdit() {
     if (!editName.trim() || !editRole.trim() || !editDetails.trim()) {
-      // Validation - can expand as needed
+      alert("Please fill in the required fields.");
       return;
     }
-    await updateDoc(doc(employeesCollection, editingId), {
-      name: editName.trim(),
-      id: editId.trim(),
-      dob: editDob.trim(),
-      role: editRole.trim(),
-      details: editDetails.trim(),
-    });
-    setEditingId(null);
+    try {
+      await updateDoc(doc(employeesCollection, editingId), {
+        name: editName.trim(),
+        id: editId.trim(),
+        dob: editDob.trim(),
+        role: editRole.trim(),
+        details: editDetails.trim(),
+      });
+      setEditingId(null);
+    } catch (error) {
+      console.error("Error updating employee:", error);
+      alert("Failed to save changes. Try again.");
+    }
   }
 
   async function deleteEmployee(docId) {
     try {
-      console.log("Deleting employee with docId:", docId);
       await deleteDoc(doc(employeesCollection, docId));
       if (editingId === docId) setEditingId(null);
-      console.log("Delete successful");
     } catch (error) {
-      console.error("Delete failed:", error);
+      console.error("Error deleting employee:", error);
+      alert("Failed to delete employee.");
     }
   }
 
@@ -101,7 +113,7 @@ export default function EmployeesTab() {
       <section id="add-employee-form" style={{ marginBottom: 24 }}>
         <h2>Add New Employee</h2>
         <input
-          placeholder="Name"
+          placeholder="Name *"
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
         />
@@ -116,12 +128,12 @@ export default function EmployeesTab() {
           onChange={(e) => setNewDob(e.target.value)}
         />
         <input
-          placeholder="Role"
+          placeholder="Role *"
           value={newRole}
           onChange={(e) => setNewRole(e.target.value)}
         />
         <textarea
-          placeholder="Details"
+          placeholder="Details *"
           value={newDetails}
           onChange={(e) => setNewDetails(e.target.value)}
           rows={3}
@@ -147,7 +159,7 @@ export default function EmployeesTab() {
                   <input
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
-                    placeholder="Name"
+                    placeholder="Name *"
                   />
                   <input
                     value={editId}
@@ -162,12 +174,12 @@ export default function EmployeesTab() {
                   <input
                     value={editRole}
                     onChange={(e) => setEditRole(e.target.value)}
-                    placeholder="Role"
+                    placeholder="Role *"
                   />
                   <textarea
                     value={editDetails}
                     onChange={(e) => setEditDetails(e.target.value)}
-                    placeholder="Details"
+                    placeholder="Details *"
                     rows={3}
                   />
                   <button onClick={saveEdit} style={{ marginRight: 10 }}>

@@ -1,46 +1,36 @@
-# SHIELD Admin Panel
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A React + Firebase Firestore admin dashboard for managing Feeds, Wanteds, and Employees in real-time.
+## Getting Started
 
-## Features
+First, run the development server:
 
-- Password-protected admin access
-- Real-time data sync using Firestore `onSnapshot`
-- Add, edit, delete records for Feeds, Wanteds, and Employees
-- Simple, responsive UI
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-## Installation
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-1. **Clone the repository:**
-   ```bash
-   git clone <your-repo-url>
-   cd <repo-folder>
-   ```
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-3. **Set up Firebase:**
-   - Create a Firebase project
-   - Enable Firestore
-   - Replace Firebase config in `firebase.js` with your own
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-4. **Start the app:**
-   ```bash
-   npm start
-   ```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Login
+## Learn More
 
-- **Default password:** is in 
+To learn more about Next.js, take a look at the following resources:
 
-## Tech Stack
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-- React
-- Firebase Firestore
-- JavaScript (ES6+)
-- Vanilla CSS
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## License
+## Deploy on Vercel
 
-This project is licensed under the MIT License.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
